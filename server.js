@@ -10,7 +10,12 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 var users = [];
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+    index: false, 
+    immutable: true, 
+    cacheControl: true,
+    maxAge: "30d"
+}));
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
