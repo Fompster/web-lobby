@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Super secret chat</title>
+    <title>Mouse it</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="CSS/style.css" />
   </head>
   <body>
     <div class="site-wrapper">
-      <div class="center-elements">
+      <div class="center-elements" id="border">
         <canvas class="expanded-canvas" id="mouse-canvas"></canvas>
+        <div class="chat-box" id="chat-box">
+            <ul id="messages"></ul>
+            <form id="form" action="">
+                <div class="message-box">
+                    <input id="message-box" autocomplete="off" />
+                    <button id="send-button">Send</button>
+                </div>
+            </form>
+        </div>
       </div>
     </div>
-    
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
     <script>
         var socket = io.connect();
 
         var form = document.getElementById('form');
-        var input = document.getElementById('input');
+        var input = document.getElementById('message-box');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -38,18 +43,15 @@
         });
     </script>
     <script>
-      let canvases = document.getElementsByClassName("expanded-canvas");
+      var canvas = document.getElementById("mouse-canvas");
+      var chatBox = document.getElementById("chat-box");
       function sizeCanvas() {
-          var parentCssProperties, paddingHorizontal, paddingVertical;
+        var parentCssProperties = window.getComputedStyle(canvas.parentElement, null);
+        var paddingHorizontal = parseInt(parentCssProperties.getPropertyValue('padding-left')) + parseInt(parentCssProperties.getPropertyValue('padding-right'));
+        var paddingVertical = parseInt(parentCssProperties.getPropertyValue('padding-top')) + parseInt(parentCssProperties.getPropertyValue('padding-bottom'));
 
-          for (var i = 0; i < canvases.length; i++) {
-              parentCssProperties = window.getComputedStyle(canvases[i].parentElement, null);
-              paddingHorizontal = parseInt(parentCssProperties.getPropertyValue('padding-left')) + parseInt(parentCssProperties.getPropertyValue('padding-right'));
-              paddingVertical = parseInt(parentCssProperties.getPropertyValue('padding-top')) + parseInt(parentCssProperties.getPropertyValue('padding-bottom'));
-
-              canvases[i].width  = canvases[i].parentElement.clientWidth - paddingHorizontal;
-              canvases[i].height = canvases[i].parentElement.clientHeight - paddingVertical;
-          }
+        canvas.width  = canvas.parentElement.clientWidth - paddingHorizontal - chatBox.clientWidth - chatBox.clientLeft - 2*canvas.clientLeft - 1;
+        canvas.height = canvas.parentElement.clientHeight - paddingVertical;
       }
       window.addEventListener('resize', sizeCanvas);
       sizeCanvas();
