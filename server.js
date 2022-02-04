@@ -1,4 +1,4 @@
-var dt = require('./Public/JavaScript/draw-canvas');
+// var dm = require('./Public/JavaScript/draw-canvas');
 
 const path = require('path');
 const PORT = process.env.PORT || 3000;
@@ -15,17 +15,19 @@ app.get('/', (req, res) => {
 app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', (socket) => {  
-    console.log('a user connected', dt.myDateTime());
+    console.log('a user connected');
 
     socket.on('disconnect', () => {
         console.log('a user has disconnected');
     });
 
     socket.on('chat message', (msg) => {
-        console.log(`message: ${msg}`);
         io.emit('chat message', msg); //sending it to everyone
     });
 
+    socket.on('click mouse', (mouseData) => {
+        io.emit('click mouse', mouseData); //sending it to everyone
+    });
 });
 
 server.listen(PORT, () => {
