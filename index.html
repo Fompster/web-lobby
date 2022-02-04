@@ -7,7 +7,7 @@
   <body>
     <div class="site-wrapper">
       <div class="center-elements">
-        <canvas id="mouse-canvas"></canvas>
+        <canvas class="expanded-canvas" id="mouse-canvas"></canvas>
       </div>
     </div>
     
@@ -37,23 +37,40 @@
             window.scrollTo(0, document.body.scrollHeight);
         });
     </script>
+    <script>
+      let canvases = document.getElementsByClassName("expanded-canvas");
+      function sizeCanvas() {
+          var parentCssProperties, paddingHorizontal, paddingVertical;
+
+          for (var i = 0; i < canvases.length; i++) {
+              parentCssProperties = window.getComputedStyle(canvases[i].parentElement, null);
+              paddingHorizontal = parseInt(parentCssProperties.getPropertyValue('padding-left')) + parseInt(parentCssProperties.getPropertyValue('padding-right'));
+              paddingVertical = parseInt(parentCssProperties.getPropertyValue('padding-top')) + parseInt(parentCssProperties.getPropertyValue('padding-bottom'));
+
+              canvases[i].width  = canvases[i].parentElement.clientWidth - paddingHorizontal;
+              canvases[i].height = canvases[i].parentElement.clientHeight - paddingVertical;
+          }
+      }
+      window.addEventListener('resize', sizeCanvas);
+      sizeCanvas();
+    </script>
     <script defer>
       var canvas = document.getElementById('mouse-canvas');
       var context = canvas.getContext("2d");
-      const mouseSize = 10;
+      const mouseRadius = 7;
 
-      canvas.addEventListener('click', function(e) {
+      canvas.addEventListener('mousemove', function(e) {
         socket.emit('click mouse', { x: e.layerX, y: e.layerY});
       });
 
       socket.on('click mouse', function(mouseData) {
-        context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight); // max.x max.y
+        context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
 
         function draw(){
             context.lineWidth = 3;
             context.strokeStyle = "#808080";
             context.beginPath();
-            context.arc(mouseData.x - 2*mouseSize, mouseData.y - 2*mouseSize, 10, 0, 2 * Math.PI, false);
+            context.arc(mouseData.x - 2*mouseRadius, mouseData.y - 2*mouseRadius, mouseRadius, 0, 2 * Math.PI, false);
             context.closePath();
             context.stroke();
 

@@ -1,19 +1,15 @@
-var socket = io();
+let canvases = document.getElementsByClassName("expanded-canvas");
+function sizeCanvas() {
+    var parentCssProperties, paddingHorizontal, paddingVertical;
 
-var form = document.getElementById('form');
-var input = document.getElementById('input');
+    for (var i = 0; i < canvases.length; i++) {
+        parentCssProperties = window.getComputedStyle(canvases[i].parentElement, null);
+        paddingHorizontal = parseInt(parentCssProperties.getPropertyValue('padding-left')) + parseInt(parentCssProperties.getPropertyValue('padding-right'));
+        paddingVertical = parseInt(parentCssProperties.getPropertyValue('padding-top')) + parseInt(parentCssProperties.getPropertyValue('padding-bottom'));
 
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (input.value) {
-    socket.emit('chat message', input.value);
-    input.value = '';
+        canvases[i].width  = canvases[i].parentElement.clientWidth - paddingHorizontal;
+        canvases[i].height = canvases[i].parentElement.clientHeight - paddingVertical;
     }
-});
-
-socket.on('chat message', function(msg) {
-    var item = document.createElement('li');
-    item.textContent = msg;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-});
+}
+window.addEventListener('resize', sizeCanvas);
+sizeCanvas();
