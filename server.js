@@ -1,23 +1,7 @@
-// const path = require('path');
-// const http = require('http');
-// const express = require('express');
-// const socketio = require('socket.io');
-
-// const app = express();
-// const server = http.createServer(app);
-// const io = socketio(server);
-// // const io = WebSocket("ws://localhost:3000");
-
-// // Set static folder
-// app.use(express.static(path.join(__dirname, 'public')));
-
-// // Run when a client connects
-// io.on('connection', socket => {
-//     console.log('A new user has joined');
-// });
+var dt = require('./Public/JavaScript/draw-canvas');
 
 const path = require('path');
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -28,10 +12,10 @@ const io = new Server(server);
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 io.on('connection', (socket) => {  
-    console.log('a user connected');
+    console.log('a user connected', dt.myDateTime());
 
     socket.on('disconnect', () => {
         console.log('a user has disconnected');

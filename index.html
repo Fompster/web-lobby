@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Super duper secret chat</title>
-    <style>
+    <title>Super secret chat</title>
+    <link rel="stylesheet" href="CSS/style.css" />
+    <!-- <style>
       body { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 
       #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
@@ -13,16 +14,21 @@
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages > li { padding: 0.5rem 1rem; }
       #messages > li:nth-child(odd) { background: #efefef; }
-    </style>
+    </style> -->
+    <!-- <script src="./Public/JavaScript/draw-canvas.js" defer></script> -->
   </head>
   <body>
+    <div class="site-wrapper">
+      <canvas id="mouse-canvas"></canvas>
+    </div>
+    
     <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>
     </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
     <script>
-        var socket = io();
+        var socket = io.connect();
 
         var form = document.getElementById('form');
         var input = document.getElementById('input');

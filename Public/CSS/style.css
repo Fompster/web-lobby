@@ -1,0 +1,36 @@
+/* @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap'); */
+
+:root {
+	--dark-color-a: #667aff;
+	--dark-color-b: #7386ff;
+	--light-color: #e6e9ff;
+	--success-color: #5cb85c;
+	--error-color: #d9534f;
+
+	--border-radius: 20px;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	background: var(--light-color);
+	margin: 0px;
+}
+
+.site-wrapper {
+	box-sizing: border-box;
+	height: 100vh;
+	width: 100%
+}
+#mouse-canvas {
+	background: white;
+	height: 70%;
+	width: 70%;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	border: 25px solid var(--dark-color-a);
+  	border-radius: var(--border-radius);
+	
+}
