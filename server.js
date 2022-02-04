@@ -29,7 +29,8 @@ io.on('connection', (socket) => {
     });
 
     socket.on('move mouse', (mouseData) => {
-        io.emit('move mouse', mouseData); //sending it to everyone
+        // socket.broadcast.emit('move mouse', mouseData); //sending it to everyone but the user who sent
+        io.emit('move mouse', mouseData);
     });
 
     socket.onAny((event, ...args) => {  console.log(event, args);}); //prints any event that happens to the client
