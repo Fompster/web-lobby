@@ -1,68 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Super secret chat</title>
-    <link rel="stylesheet" href="CSS/style.css" />
+    <title>Mouse it</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type= "text/css" href="CSS/style.css" />
   </head>
   <body>
     <div class="site-wrapper">
       <div class="center-elements">
-        <canvas id="mouse-canvas"></canvas>
+        <div class="join-lobby">
+          <form id="username-form" action="lobby.html">
+            <label for="username"><h1>Choose your nickname</h1></label>
+            <input class="join-room" id="username" placeholder="AmazingBuffalo..." maxlength="10" autocomplete="off" required/>
+            <h1>Enter a room code to join your friends!</h1>
+            <input class="join-room" id="room-code" placeholder="0123" autocomplete="off"/>
+            <br>
+            <button class="join-room">Join room</button>
+          </form>
+        </div>
       </div>
     </div>
-    
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
     <script>
-        var socket = io.connect();
+      var socket = io();
 
-        var form = document.getElementById('form');
-        var input = document.getElementById('input');
+      var form = document.getElementById('form');
+      var input = document.getElementById('username');
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (input.value) {
-            socket.emit('chat message', input.value);
-            input.value = '';
-            }
-        });
-
-        socket.on('chat message', function(msg) { //recieved message??
-            var item = document.createElement('li');
-            item.textContent = msg;
-            messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
-        });
-    </script>
-    <script defer>
-      var canvas = document.getElementById('mouse-canvas');
-      var context = canvas.getContext("2d");
-      const mouseSize = 10;
-
-      canvas.addEventListener('click', function(e) {
-        socket.emit('click mouse', { x: e.layerX, y: e.layerY});
-      });
-
-      socket.on('click mouse', function(mouseData) {
-        context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight); // max.x max.y
-
-        function draw(){
-            context.lineWidth = 3;
-            context.strokeStyle = "#808080";
-            context.beginPath();
-            context.arc(mouseData.x - 2*mouseSize, mouseData.y - 2*mouseSize, 10, 0, 2 * Math.PI, false);
-            context.closePath();
-            context.stroke();
-
-            // window.requestAnimationFrame(draw);
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (input.value) {
+          socket.emit('chat message', input.value);
+          input.value = '';
         }
-
-        window.requestAnimationFrame(draw);
-        console.log(mouseData.x, mouseData.y);
       });
-    </script>
+    </script> -->
   </body>
 </html>
