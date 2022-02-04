@@ -12,8 +12,12 @@ form.addEventListener('submit', function(e) {
 });
 
 socket.on('chat message', function(msg) { //recieved message??
+    var bubble = document.createElement('div');
     var item = document.createElement('li');
+    bubble.classList.add("speech-bubble");
+    bubble.appendChild(item);
+    // bubble.textContent = msg;
     item.textContent = msg;
-    messages.appendChild(item);
+    messages.appendChild(bubble);
     window.scrollTo(0, document.body.scrollHeight);
 });

@@ -22,46 +22,7 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
     <script src="/JavaScript/send-message.js"></script>
-    <script>
-      var canvas = document.getElementById("mouse-canvas");
-      var chatBox = document.getElementById("chat-box");
-      function sizeCanvas() {
-        var parentCssProperties = window.getComputedStyle(canvas.parentElement, null);
-        var paddingHorizontal = parseInt(parentCssProperties.getPropertyValue('padding-left')) + parseInt(parentCssProperties.getPropertyValue('padding-right'));
-        var paddingVertical = parseInt(parentCssProperties.getPropertyValue('padding-top')) + parseInt(parentCssProperties.getPropertyValue('padding-bottom'));
-
-        canvas.width  = canvas.parentElement.clientWidth - paddingHorizontal - chatBox.clientWidth - chatBox.clientLeft - 2*canvas.clientLeft - 1;
-        canvas.height = canvas.parentElement.clientHeight - paddingVertical;
-      }
-      window.addEventListener('resize', sizeCanvas);
-      sizeCanvas();
-    </script>
-    <script defer>
-      var canvas = document.getElementById('mouse-canvas');
-      var context = canvas.getContext("2d");
-      const mouseRadius = 7;
-
-      canvas.addEventListener('mousemove', function(e) {
-        socket.emit('move mouse', { x: e.layerX, y: e.layerY});
-      });
-
-      socket.on('move mouse', function(mouseData) {
-        drawMouse(mouseData.x, mouseData.y, context);
-      });
-
-      function drawMouse(x, y, context) {
-        function draw(){
-          context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-          context.lineWidth = 3;
-          context.strokeStyle = "#808080";
-          context.beginPath();
-          context.arc(x - 3*mouseRadius, y - 3*mouseRadius, mouseRadius, 0, 2 * Math.PI, false);
-          context.closePath();
-          context.stroke(); 
-        }
-
-        window.requestAnimationFrame(draw);
-      }
-    </script>
+    <script src="/JavaScript/resize-canvas.js"></script>
+    <script src="/JavaScript/draw-canvas.js"></script>
   </body>
 </html>
