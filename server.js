@@ -10,7 +10,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 var users = [];
 
-app.use(express.static(path.join(__dirname, 'public'), {
+app.use(express.static(path.join(__dirname), {
     index: false, 
     immutable: true, 
     cacheControl: true,
