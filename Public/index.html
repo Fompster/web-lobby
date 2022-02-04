@@ -60,26 +60,26 @@
       const mouseRadius = 7;
 
       canvas.addEventListener('mousemove', function(e) {
-        socket.emit('click mouse', { x: e.layerX, y: e.layerY});
+        socket.emit('move mouse', { x: e.layerX, y: e.layerY});
       });
 
-      socket.on('click mouse', function(mouseData) {
-        context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+      socket.on('move mouse', function(mouseData) {
+        drawMouse(mouseData.x, mouseData.y, context);
+      });
 
+      function drawMouse(x, y, context) {
         function draw(){
-            context.lineWidth = 3;
-            context.strokeStyle = "#808080";
-            context.beginPath();
-            context.arc(mouseData.x - 2*mouseRadius, mouseData.y - 2*mouseRadius, mouseRadius, 0, 2 * Math.PI, false);
-            context.closePath();
-            context.stroke();
-
-            // window.requestAnimationFrame(draw);
+          context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+          context.lineWidth = 3;
+          context.strokeStyle = "#808080";
+          context.beginPath();
+          context.arc(x - 3*mouseRadius, y - 3*mouseRadius, mouseRadius, 0, 2 * Math.PI, false);
+          context.closePath();
+          context.stroke(); 
         }
 
         window.requestAnimationFrame(draw);
-        console.log(mouseData.x, mouseData.y);
-      });
+      }
     </script>
   </body>
 </html>

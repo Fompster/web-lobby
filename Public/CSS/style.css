@@ -36,6 +36,6 @@ body {
 	border: 25px solid var(--dark-color-a);
   	border-radius: var(--border-radius);
 }
-/* #mouse-canvas:hover{
-	background: #5cb85c;
-} */
+#mouse-canvas:hover{
+	cursor: none;
+}
