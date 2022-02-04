@@ -1,0 +1,27 @@
+{
+  "name": "web-lobby",
+  "version": "1.0.0",
+  "description": "real-time lobby",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fompster/web-lobby.git"
+  },
+  "author": "Tanja de Winter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Fompster/web-lobby/issues"
+  },
+  "homepage": "https://github.com/Fompster/web-lobby#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "socket.io": "^4.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
