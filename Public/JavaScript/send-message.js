@@ -16,7 +16,6 @@ socket.on('chat message', function(msg) { //recieved message??
     var item = document.createElement('li');
     bubble.classList.add("speech-bubble");
     bubble.appendChild(item);
-    // bubble.textContent = msg;
     item.textContent = msg;
     messages.appendChild(bubble);
     window.scrollTo(0, document.body.scrollHeight);
