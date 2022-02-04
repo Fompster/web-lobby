@@ -40,6 +40,7 @@
     <script defer>
       var canvas = document.getElementById('mouse-canvas');
       var context = canvas.getContext("2d");
+      const mouseSize = 10;
 
       canvas.addEventListener('click', function(e) {
         socket.emit('click mouse', { x: e.layerX, y: e.layerY});
@@ -52,7 +53,7 @@
             context.lineWidth = 3;
             context.strokeStyle = "#808080";
             context.beginPath();
-            context.arc(mouseData.x, mouseData.y, 20, 0, 2 * Math.PI, false);
+            context.arc(mouseData.x - 2*mouseSize, mouseData.y - 2*mouseSize, 10, 0, 2 * Math.PI, false);
             context.closePath();
             context.stroke();
 
