@@ -8,6 +8,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const formatMessage = require('./Public/JavaScript/format-message');
 const { joinUser, getUser, removeUser } = require('./Public/JavaScript/users');
+const bot = {username: "Bot", color: "#808080"};
 
 app.use(express.static(path.join(__dirname, 'Public')));
 
@@ -20,17 +21,21 @@ io.on('connection', (socket) => {
         const user = joinUser(socket.id, username, roomCode);
         socket.join(user.roomCode);
 
-        socket.broadcast.to(user.roomCode).emit('chat message', formatMessage("Bot", `${user.username} has clicked in`));
+        io.to(user.id).emit('send room data', user.userColor);
+        socket.broadcast.to(user.roomCode).emit('chat message', formatMessage(bot.username, `${user.username} has clicked in`, color = bot.color));
     });
 
     socket.on('chat message', (msg) => {
         const user = getUser(socket.id);
-        io.to(user.roomCode).emit('chat message', formatMessage(user.username, msg)); //sending it to everyone in the room
+        io.to(user.roomCode).emit('chat message', formatMessage(user.username, msg, color = user.userColor)); //sending it to everyone in the room
     });
 
     socket.on('move mouse', (mouseData) => {
-        // socket.broadcast.emit('move mouse', mouseData); //sending it to everyone but the user who sent
-        io.emit('move mouse', mouseData);
+        const user = getUser(socket.id);
+        let data = {x: mouseData.x, y: mouseData.y, color: user.userColor};
+
+        socket.broadcast.emit('move mouse', data); //sending it to everyone but the user who sent
+        // io.to(user.roomCode).emit('move mouse', data);
     });
 
     // when user disconnects
@@ -38,7 +43,7 @@ io.on('connection', (socket) => {
         const user = removeUser(socket.id);
 
         if (user) {
-            io.to(user.roomCode).emit('chat message', formatMessage("Bot", `${user.username} has disconnected`));
+            io.to(user.roomCode).emit('chat message', formatMessage(bot.username, `${user.username} has disconnected`, color = bot.color));
         }
     });
 

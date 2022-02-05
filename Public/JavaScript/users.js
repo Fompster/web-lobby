@@ -1,8 +1,10 @@
 const users = [];
+const colors = ["#5cb85c", "#d9534f", "#5567db"];
 
 // Join User to room add color too??
 function joinUser(id, username, roomCode) {
-    const user = { id, username, roomCode }
+    const userColor = colors[Math.floor(Math.random() * colors.length)];
+    const user = { id, username, roomCode, userColor }
 
     users.push(user);
 

@@ -77,7 +77,8 @@ button.join-room {
 	width: 18vw;
 	float: right;
 	border-left: 5px solid var(--dark-color-a);
-	overflow-y: scroll;
+	display: flex;
+	flex-direction: column;
 }
 
 .message-box {
@@ -88,8 +89,9 @@ button.join-room {
 #messages {
 	list-style-type: none;
 	margin: 0; 
-	margin-bottom: 10px;
 	padding: 0; 
+	height: inherit;
+	overflow-y: scroll;
 }
 
 .speech-bubble {
@@ -103,16 +105,22 @@ button.join-room {
 }
 
 .speech-bubble ul {
-	margin-top: 15px;
+	margin-top: 10px;
 	padding: 0;
 }
 
+form#form {
+	height: 50px;
+	display: flex;
+}
+
 input#message-box {
-	float: left;
+	flex: 4;
+	min-width: 10px;
 }
 
 button#send-button {
-	float: right;
+	flex: 1;
 }
 
 #mouse-canvas {

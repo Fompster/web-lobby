@@ -19,10 +19,10 @@ form.addEventListener('submit', function(e) {
     }
 });
 
-socket.on('chat message', function(msg) { //recieved message??
+socket.on('chat message', function(msg) { //recieved message
     var bubble = document.createElement('div');
     bubble.classList.add("speech-bubble");
-    bubble.innerHTML = `<p>${msg.username}</p><ul>${msg.text}</ul>`
+    bubble.innerHTML = `<p style='color:${msg.color}'>${msg.username}</p><ul>${msg.text}</ul>`//<p class="time">at ${msg.time}</p>
     messages.appendChild(bubble);
-    chatBox.scrollTo(0, document.body.scrollHeight);
+    messages.scrollTo(0, document.body.scrollHeight);
 });
