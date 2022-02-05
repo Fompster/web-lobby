@@ -7,7 +7,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const formatMessage = require('./Public/JavaScript/format-message');
-const { joinUser, getUser } = require('./Public/JavaScript/users');
+const { joinUser, getUser, removeUser } = require('./Public/JavaScript/users');
 
 app.use(express.static(path.join(__dirname, 'Public')));
 
@@ -35,8 +35,11 @@ io.on('connection', (socket) => {
 
     // when user disconnects
     socket.on('disconnect', () => {
-        // const user = getUser(socket.id);
-        socket.broadcast.emit('chat message', formatMessage("Bot", `user has disconnected`));
+        const user = removeUser(socket.id);
+
+        if (user) {
+            io.to(user.roomCode).emit('chat message', formatMessage("Bot", `${user.username} has disconnected`));
+        }
     });
 
     // socket.onAny((event, ...args) => {  console.log(event, args);}); //prints any event that happens to the client
