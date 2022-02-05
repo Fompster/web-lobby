@@ -1,7 +1,15 @@
-var socket = io.connect();
+// get username and room from URL
+const { username, roomCode } = Qs.parse(location.search, {
+    ignoreQueryPrefix: true
+})
 
 var form = document.getElementById('form');
 var input = document.getElementById('message-box');
+
+var socket = io.connect();
+
+// Join room
+socket.emit('joinRoom', { username, roomCode });
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
@@ -13,10 +21,8 @@ form.addEventListener('submit', function(e) {
 
 socket.on('chat message', function(msg) { //recieved message??
     var bubble = document.createElement('div');
-    var item = document.createElement('li');
     bubble.classList.add("speech-bubble");
-    bubble.appendChild(item);
-    item.textContent = msg;
+    bubble.innerHTML = `<p>${msg.username}</p><ul>${msg.text}</ul>`
     messages.appendChild(bubble);
-    window.scrollTo(0, document.body.scrollHeight);
+    chatBox.scrollTo(0, document.body.scrollHeight);
 });
