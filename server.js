@@ -20,7 +20,6 @@ io.on('connection', (socket) => {
         socket.on('chat message', (msg) => {
             io.emit('chat message', formatMessage(username, msg)); //sending it to everyone
         });
-
     });
 
 
