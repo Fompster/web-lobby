@@ -6,7 +6,7 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-const formatMessage = require(__dirname + '/public/Javascript/format-message');
+const formatMessage = require('./Public/Javascript/format-message');
 
 app.use(express.static(path.join(__dirname, 'Public')));
 
