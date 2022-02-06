@@ -9,13 +9,18 @@ let clientUserId;
 socket.on('room info', function(info) {
     roomUsers = info.users;
     clientUserId = info.user;
+
+    // place client last in list so that it will be rendered on top of others
+    let index = roomUsers.findIndex(user => user.id === clientUserId);
+    let user = roomUsers.splice(index, 1)[0];
+    roomUsers.push(user);
+
     drawMouse(context, canvas, roomUsers);
 });
 
 socket.on('update room users', function(users) {
     if (users.newUser) {
-        console.log(users)
-        roomUsers.push(users.newUser);
+        roomUsers.unshift(users.newUser);
     } else {
         index = roomUsers.findIndex(user => user.id === users.disconnectedUser.id);
         if (index != -1) {
@@ -38,27 +43,3 @@ socket.on('move mouse', function(mouseData) {
     roomUsers[index].posX = mouseData.x;
     roomUsers[index].posY = mouseData.y;
 });
-
-// function drawMouse(context, canvas) {
-
-//     function loopUsers() {
-//         context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-//         for (let i in roomUsers){
-//             draw(context, roomUsers[i]);
-//         };
-//         window.requestAnimationFrame(loopUsers);
-//     }
-
-//     function draw(context, user){
-//         context.lineWidth = 3;
-//         context.strokeStyle = "#808080";
-//         context.fillStyle = user.userColor;
-//         context.beginPath();
-//         context.arc(user.posX - 3*mouseRadius, user.posY - 3*mouseRadius, mouseRadius, 0, 2 * Math.PI, false);
-//         context.closePath();
-//         context.fill();
-//         context.stroke(); 
-//     }
-
-//     loopUsers();
-// }
