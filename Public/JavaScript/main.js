@@ -1,14 +1,15 @@
+import { drawMouse } from "./draw-mouse.js";
+
 var canvas = document.getElementById('mouse-canvas');
 var context = canvas.getContext("2d");
 let roomUsers = [];
 let clientUserId;
-const mouseRadius = 7;
 
 // sent once on join
 socket.on('room info', function(info) {
     roomUsers = info.users;
     clientUserId = info.user;
-    drawMouse(context);
+    drawMouse(context, canvas, roomUsers);
 });
 
 socket.on('update room users', function(users) {
@@ -38,26 +39,26 @@ socket.on('move mouse', function(mouseData) {
     roomUsers[index].posY = mouseData.y;
 });
 
-function drawMouse(context) {
+// function drawMouse(context, canvas) {
 
-    function loopUsers() {
-        context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
-        for (let i in roomUsers){
-            draw(context, roomUsers[i]);
-        };
-        window.requestAnimationFrame(loopUsers);
-    }
+//     function loopUsers() {
+//         context.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+//         for (let i in roomUsers){
+//             draw(context, roomUsers[i]);
+//         };
+//         window.requestAnimationFrame(loopUsers);
+//     }
 
-    function draw(context, user){
-        context.lineWidth = 3;
-        context.strokeStyle = "#808080";
-        context.fillStyle = user.userColor;
-        context.beginPath();
-        context.arc(user.posX - 3*mouseRadius, user.posY - 3*mouseRadius, mouseRadius, 0, 2 * Math.PI, false);
-        context.closePath();
-        context.fill();
-        context.stroke(); 
-    }
+//     function draw(context, user){
+//         context.lineWidth = 3;
+//         context.strokeStyle = "#808080";
+//         context.fillStyle = user.userColor;
+//         context.beginPath();
+//         context.arc(user.posX - 3*mouseRadius, user.posY - 3*mouseRadius, mouseRadius, 0, 2 * Math.PI, false);
+//         context.closePath();
+//         context.fill();
+//         context.stroke(); 
+//     }
 
-    loopUsers();
-}
+//     loopUsers();
+// }
